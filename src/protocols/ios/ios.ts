@@ -340,10 +340,12 @@ export abstract class IOSProtocol extends ProtocolAdapter {
     private onRuntimeGetProperties(msg: any): Promise<any> {
         const newPropertyDescriptors = [];
 
-        for (let i = 0; i < msg.result.result.length; i++) {
-            if (msg.result.result[i].isOwn || msg.result.result[i].nativeGetter) {
-                msg.result.result[i].isOwn = true;
-                newPropertyDescriptors.push(msg.result.result[i]);
+        if (msg.result.result) {
+            for (let i = 0; i < msg.result.result.length; i++) {
+                if (msg.result.result[i].isOwn || msg.result.result[i].nativeGetter) {
+                    msg.result.result[i].isOwn = true;
+                    newPropertyDescriptors.push(msg.result.result[i]);
+                }
             }
         }
         msg.result.result = null;
